@@ -1,0 +1,77 @@
+using System;
+
+/* Описание скрипта.
+ * Есть три метода:
+ * 1-ый общается с пользователем.
+ * 2-ой обрабатывает ввод пользователя.
+ * 3-ий находит самую маленькую цифру в тексте, введённом пользователем и проверенным 2-ым методом.
+ */
+ 
+namespace WorkAB
+{
+	class Program
+    {
+        static void Main(string[] args)
+        {
+            MainMenu();
+        }
+
+        static void MainMenu()
+        {
+		    // Ввод пользователем текста.
+            Console.Write("Введите любые символы: ");
+            string Numbers = Console.ReadLine();
+
+			// Проверка текста пользователя на то, что текст содержит только цифры.
+            if (IsDigitsOnly(Numbers))
+            {
+                Console.WriteLine(FindMinNumber(Numbers));
+            }
+            else
+            {
+                Console.WriteLine("IsDigitsOnlyException");
+            }
+
+			// Бесконечный цикл.
+            MainMenu();
+        }
+
+        static bool IsDigitsOnly(string str)
+        {
+		    // Проверка присланного текста (ASCII)
+            foreach (char c in str)
+            {
+                if (c < '0' || c > '9')
+                    return false;
+            }
+
+            return true;
+        }
+
+        static int FindMinNumber(string Numbers)
+        {
+            int Min = 0;
+
+			// Метод работает так: первое число он делает минимальным, а последующие сверяет, меньше ли они.
+			// Если они меньше - минимальное значение меняется. В конце возвращает самое минимальное значение.
+            for (int i = 0; i < Numbers.Length; i++)
+            {
+                if (i != 0)
+                {
+                    if (Convert.ToInt32(Numbers[i] - 48) < Min)
+                    {
+                        Min = Convert.ToInt32(Numbers[i]) - 48;
+                    }
+                }
+                else
+                {
+                    Min = Convert.ToInt32(Numbers[i]) - 48;
+                }
+
+                Console.WriteLine(Convert.ToInt32(Numbers[i]) + "  " + Min);
+            }
+
+            return Min;
+        }
+    }
+}
